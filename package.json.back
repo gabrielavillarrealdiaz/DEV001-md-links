@@ -1,0 +1,12 @@
+{
+  "name": "dev001-md-links",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=16.x"
+  },
+  "bootcamp": {
+    "createdAt": "2022-11-16T21:49:06.371Z",
+    "version": "5.4.0",
+    "commit": "14aeca030be012fc987dcb1c604bbbcb0fdd325e"
+  }
+}
