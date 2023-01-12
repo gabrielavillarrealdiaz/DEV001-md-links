@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs');
 const fsp = require('fs/promises');
 const fetch = require('node-fetch');
+const { resolve } = require('path');
+//const { resolve } = require('path');
 
 // analizar si el path existe 
 const pathYes = (route) => fs.existsSync(route)
@@ -25,81 +27,47 @@ function pathCheck(route) {
 // analiza extensión y comprueba si el archivo es markdow
 const markdowFile = (route) => {// (path.extname(route) === '.md') ? console.log('El archivo es .md') :  console.log('El formato del archivo no es .md');
   if (path.extname(route) === '.md') {
-      console.log('El archivo es .md')
-      return true
-  } else { 
-    console.log('El formato del archivo no es .md') 
-    return false } };
+    console.log('El archivo es .md')
+    return true
+  } else {
+    console.log('El formato del archivo no es .md')
+    return false
+  }
+};
+
+// muestra ruta del archivo analizado
+const pathInput = (route) => process.argv[route];
 
 
-
-// buscar links y obtener array de links con propiedades href, text, file (data es el contenido del archivo)
+// buscar links y retorna array de links con propiedades href, text, file (data es el contenido del archivo)
 const linksArray = (data) => {
-  console.log({data})
+  console.log({ data })
   const links = [];
-  const linkFinder = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm
-  ;
+  const linkFinder = /(\[(.*?)\])(\((.*?)\))/gim
+  //const linkFinder = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
   let match = linkFinder.exec(data);
-  console.log({match})
+  console.log("hola", match)
   while (match !== null) {
     links.push({
-      href: match[2], 
-      text: match[5],
-      file: './doc/probando.md',
+      href: match[4],
+      text: match[2],
+      file: pathInput(1)
+      
     });
     match = linkFinder.exec(data);
   }
   return links;
+
 }
-//validar expresion regular (ver unicamente los links)
-// retornar arrelgo de links
-// iterar el arreglo y agregar al links con el formato o hacer un map
-
-// validar links (devuelve objeto con href, text, file, status)
-
-const linksValidos = (data) => {
-  const validos = [];
-  const linkFinder = /\[(.+?)\]\((https?:\/\/[^\s)]+)\)/gim;
-  let match = linkFinder.exec(data);
-  while (match !== null) {
-    let matchLinks = match;
-    validos.push(fetch(match[4]).then((response) => {
-      return {
-        href: matchLinks[4],
-        text: matchLinks[2],
-        file: '',
-        status: response.status,
-      }
-    }))
-  
-    match = linkFinder.exec(data);
-  }
-  return Promise.all(validos)
-}
-
-
-
-// leer directorio
-const directoryRead = (directory) => fs.readdirSync(directory);
 
 // leer archivos y buscar links, devolver objeto con links y propiedades href, text, file
-const readFile = (route) => fsp.readFile(route,'utf8')
+const readFile = (route) => fsp.readFile(route, 'utf8')
   .then((data) => {
     console.log(linksArray(data))
   })
   .catch((error) => {
     console.log(error + 'error: archivo no encontrado')
   })
-
-// leer archivos y retornar objeto con propiedades href, text, file, status, ok)
-const readFileValidos = (route) =>fs.readFile(route, 'utf8', (error, data) =>{
-  if(data){
-    linksValidos(data)
-    .then(console.log)
-  } else if(error){
-    console.log(error + 'error: archivo no encontrado')
-  }
-});
 
 // contar links unicos
 const linksUnicos = (links) => {
@@ -123,6 +91,10 @@ const linksBroken = (links) => {
   });
   return broken.length;
 }
+
+// leer directorio
+const directoryRead = (directory) => fs.readdirSync(directory);
+
 // función mdLinks
 const mdLinks = (path, options) => {
   return new Promise((resolve, reject) => { //resolve y reject son funciones callback
@@ -153,7 +125,7 @@ module.exports = {
   markdowFile,
   linksArray,
   readFile,
-  readFileValidos,
-  linksValidos,
-  
+  //readFileValidos,
+  //linksValidos,
+
 };
