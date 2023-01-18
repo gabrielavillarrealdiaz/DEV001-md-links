@@ -122,3 +122,27 @@ const readFile = (route) => fsp.readFile(route, 'utf8')
   .catch((error) => {
     console.log(error + 'error: archivo no encontrado')
   })*/
+
+  const linksUnicos = (links) => {
+    let unicos = [];
+    links.forEach(link => {
+      if (!unicos.includes(link.href)) {
+        unicos.push
+      }
+    });
+    console.log('El total de links unicos es' + unicos.length)
+    return unicos.length;
+  
+  }
+  // contar links broken
+  const linksBroken = (links) => {
+    let broken = [];
+    links.forEach(link => {
+      if (link.ok === false) {
+        broken.push(link.href)
+      }
+    });
+    console.log('El total de links unicos es' + unicos.length)
+    return broken.length;
+  }
+  

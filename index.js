@@ -11,7 +11,7 @@ fs.existsSync(route)
 
 // analiza si es ruta abosoluta o relativa (convierte relativa en absoluta )
 function pathCheck(route) {
-  return (path.isAbsolute(route)) ? route : path.resolve(route) 
+return (path.isAbsolute(route)) ? route : path.resolve(route) 
 };
 // .replace(/\\/g, '/') 
 
@@ -128,36 +128,42 @@ const mdLinks = (route, options) => {
   })
 }
 
+
+mdLinks('C:/Users/Gabriela/Desktop/proyecto4/DEV001-md-links/doc/probando.md')
+.then(() => {})
+.catch((error) => {
+    console.log(error)
+})
 //('C:/Users/Gabriela/Desktop/proyecto4/DEV001-md-links/doc/probando.md')
 
 
+
+
+
+// contar links unicos (--stats)
+const statsFun = (links) =>{
+  const unicos = new Set(links.map((link) => links.href)).size;
+  return {
+    Total: links.length,
+    Unicos: unicos,
+    }
+};
+
+// contar links rotos (--stats --validate)
+const statsValidate = (links) => {
+  const unicos = new Set(arrOfLinks.map((link) => link.href)).size;
+  const broken = links.filter((link) => link.ok === 'fail')
+  return {
+    Total: links.length,
+    Unicos: unicos,
+    Broken: broken.length
+  }
+}
+
+
 module.exports = {
+  statsFun,
+  statsValidate,
   mdLinks,
   pathCheck,
 };
-
-
-
-// contar links unicos
-const linksUnicos = (links) => {
-  let unicos = [];
-  links.forEach(link => {
-    if (!unicos.includes(link.href)) {
-      unicos.push
-    }
-  });
-  console.log('El total de links unicos es' + unicos.length)
-  return unicos.length;
-
-}
-// contar links broken
-const linksBroken = (links) => {
-  let broken = [];
-  links.forEach(link => {
-    if (link.ok === false) {
-      broken.push(link.href)
-    }
-  });
-  console.log('El total de links unicos es' + unicos.length)
-  return broken.length;
-}
