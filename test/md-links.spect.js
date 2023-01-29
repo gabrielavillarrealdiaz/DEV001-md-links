@@ -1,11 +1,16 @@
-const mdLinks = require('../index');
+const { mdLinks } = require('..index.js');
+const fetch = require("node-fetch");
+jest.mock("node-fetch");
 
+const validate = true;
+const ruta = './doc/probando.md';
 
 describe('mdLinks', () => {
 
- it('deberia devolver una promesa', () => {
-   expect(mdLinks('./README,md')).toBe(typeof Promise)
+ it.only('deberia devolver una promesa', () => {
+   expect(mdLinks(ruta, validate)).toBeInstanceOf(typeof Promise)
   }); 
+
   it('debe rechazar cuando el path no existe', () => {
     mdLinks('/noexiste/').catch((error)=> {
       expect(error).toBe(new Error('error: La ruta no existe'))

@@ -146,3 +146,37 @@ const readFile = (route) => fsp.readFile(route, 'utf8')
     return broken.length;
   }
   
+  // analizar si el path existe 
+//const pathYes = (route) => fs.existsSync(route) usar la funcion de node, no es necesario renombrar 
+
+// es directorio 
+//const isDirectory = (route) => fs.statSync(route).isDirectory();
+
+/*readFile(ruta).then((data) => {
+
+  //console.log('getlinksss', getLinks(data))
+
+
+  return getLinks(data)
+})
+  .catch((error) => {
+    console.log(error + 'error: archivo sin linkssss')
+  }) */
+
+// const que lee archivos y llama a funcion validateLinks retorna objeto con propiedades href, text, file, status, ok
+//const readFileValidos = (route) => fsp.readFileSync(route, 'utf8',);
+/*
+readFileValidos(ruta).then((data) => {
+  // console.log("la data del then ", data)
+  const links = getLinks(data);
+  validateLinks(links).then((res) => {
+   //console.log('resssssssss', res)
+    return res
+    //resolve(res)
+    //return Promise.all(res)
+
+  })
+})
+  .catch((error) => {
+    console.log(error + 'error: archivo sin links!!!')
+  })*/
