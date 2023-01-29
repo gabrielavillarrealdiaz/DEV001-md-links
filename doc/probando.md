@@ -4,4 +4,3 @@
 
 [Google](https://www.google.com/)
 
-[Linkedin](https://www.linkedin.com/in/gabrielafail)

@@ -4,10 +4,15 @@ const {
     mdLinks
 } = require('./index.js');
 
+/*
+
 const optionInput = process.argv;
 const route = process.argv[2];
+//'C:/Users/Gabriela/Desktop/proyecto4/DEV001-md-links/doc/probando.md'
+//C:\Users\Gabriela\Desktop\proyecto4\DEV001-md-links\doc\probando.md
 const validate = optionInput.includes('--validate');
 const stats = optionInput.includes('--stats');
+
 
 const cli = (route) => {
     if (!route) {
@@ -80,24 +85,19 @@ const cli = (route) => {
 
 }
 }
-cli('C:/Users/Gabriela/Desktop/proyecto4/DEV001-md-links/doc/probando.md')
 
+cli('C:/Users/Gabriela/Desktop/proyecto4/DEV001-md-links/doc/probando.md') 
 
+*/
 
-
-
-
-
-
-
-
-
-/*mdLinks('C:/Users/Gabriela/Desktop/proyecto4/DEV001-md-links/doc/probando.md')
-.then(() => {})
+mdLinks('C:/Users/Gabriela/Desktop/proyecto4/DEV001-md-links/doc/probando.md')
+.then((response) => {
+    console.log('mdlink respuesta', response)
+})
 .catch((error) => {
     console.log(error)
 })
-*/
+
 
 
 /*console.log('La ruta es un: ' + filesOrDirectory('C:/Users/Gabriela/Desktop/proyecto4/docPrueba.txt'))
